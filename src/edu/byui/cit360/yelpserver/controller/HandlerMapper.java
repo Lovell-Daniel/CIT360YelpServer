@@ -7,7 +7,13 @@ public class HandlerMapper {
 
 	public HandlerMapper() {
 		//creates mapping for handler requests
-		this.handlerMap.put("boot", new BootHandler());
+		handlerMap.put("boot", new BootHandler());
+		handlerMap.put("updateConsole", new UpdateConsoleHandler());
+		handlerMap.put("keyboardListener", new KeyboardListenerHandler());
+		handlerMap.put("socketView", new SocketViewHandler());
+		handlerMap.put("processJSON", new ProcessJSONHandler());
+		handlerMap.put("loadFromPersist", new LoadFromPersistHandler());
+
 
 	}
 

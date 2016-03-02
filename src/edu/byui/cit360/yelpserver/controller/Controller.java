@@ -27,10 +27,10 @@ public class Controller {
 		return view;
 	}
 	
-	public void handleRequest(String request, String ... args) {
+	public void handleRequest(Controller controller, String request, String ... args) {
 		
-		Handler handler = this.handlerMapper.getHandler(request);
-		handler.handleIt(args);
+		Handler handler = handlerMapper.getHandler(request);
+		handler.handleIt(controller, args);
 		
 	}
 	

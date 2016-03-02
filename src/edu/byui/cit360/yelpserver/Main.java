@@ -12,7 +12,7 @@ public class Main {
 		Model model = new Model();
 		Controller controller = new Controller(model, view);
 		
-		controller.handleRequest("boot");
+		controller.handleRequest(controller, "boot");
 	}
 
 }
