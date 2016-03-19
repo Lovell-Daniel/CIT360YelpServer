@@ -2,11 +2,9 @@ package edu.byui.cit360.yelpserver.view;
 
 import java.net.ServerSocket;
 import java.net.Socket;
-
 import edu.byui.cit360.yelpserver.controller.Controller;
-import edu.byui.cit360.yelpserver.controller.SocketConnection;
 
-public class SocketView implements Runnable {
+public class SocketView implements Runnable {	
 	
 	Controller controller;
 	
@@ -17,16 +15,18 @@ public class SocketView implements Runnable {
 	@Override
 	public void run() {
 		try {
-			while(true){
-				ServerSocket serverSocket = new ServerSocket(8080);
+			//while(controller.getModel().isKeepOpen()){
+			while(true) {
+				ServerSocket serverSocket = new ServerSocket(4499);
 				Socket clientSocket = serverSocket.accept();
 				//parse multiple connections in separate threads
-				SocketConnection socketConnection = new SocketConnection(controller, clientSocket);
+				SocketConnectionView socketConnection = new SocketConnectionView(controller, clientSocket);
 				new Thread(socketConnection).start();
 			}
 		} catch (Exception e) {
+			String message = "\nThere was a problem starting the server. ";
+			controller.handleRequest(controller, "error", message + e.getMessage());
 			e.printStackTrace();
-			System.exit(1);
 		}		
 	}
 }

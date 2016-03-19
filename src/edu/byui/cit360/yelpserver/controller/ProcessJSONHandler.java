@@ -1,16 +1,25 @@
 package edu.byui.cit360.yelpserver.controller;
 
+import java.time.ZonedDateTime;
+import java.util.concurrent.LinkedBlockingQueue;
+
+import edu.byui.cit360.yelpserver.model.YelpResponse;
+
 public class ProcessJSONHandler extends Handler {
 
 	@Override
-	void handleIt(Controller controller, String ... args) {
-		//save latest JSON
-		controller.getModel().getRecentSearches().setLastThree(args[0]);
-		
-		//process the JSON - not needed on server
-		//JSONObject jsonObject = new JSONObject(args[0]);
-		
-		
+	public void handleIt(Controller controller, String... args) {
+
+		ZonedDateTime now = ZonedDateTime.now();
+		YelpResponse yelpResponse = new YelpResponse(now, args[0]);
+		LinkedBlockingQueue<YelpResponse> lastThree = controller.getModel().getUsers().get(0).getLastThree();
+		try {
+			lastThree.take();
+			lastThree.put(yelpResponse);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

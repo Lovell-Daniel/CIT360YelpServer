@@ -1,30 +1,26 @@
 package edu.byui.cit360.yelpserver.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
 import edu.byui.cit360.yelpserver.model.Model;
-import edu.byui.cit360.yelpserver.view.View;
 
 public class Controller {
 
 	private Model model;
-	private View view;
 	private HandlerMapper handlerMapper;
+    private BufferedReader keyboard;
+    private PrintWriter console;
 
-	public Controller(Model model, View view) {
+	public Controller() {
 		
-		//initializes the model, view, and handerMapper
-		this.model = model;
-		this.view = view;
+		setModel(new Model());
+		//populates model with dummy data
 		handlerMapper = new HandlerMapper();
+		setKeyboard(new BufferedReader(new InputStreamReader(System.in)));
+		setConsole(new PrintWriter(System.out, true));
 		
-	}
-	
-
-	public Model getModel() {
-		return model;
-	}
-	
-	public View getView() {
-		return view;
 	}
 	
 	public void handleRequest(Controller controller, String request, String ... args) {
@@ -32,6 +28,30 @@ public class Controller {
 		Handler handler = handlerMapper.getHandler(request);
 		handler.handleIt(controller, args);
 		
+	}
+
+	public Model getModel() {
+		return model;
+	}
+
+	public void setModel(Model model) {
+		this.model = model;
+	}
+
+	public BufferedReader getKeyboard() {
+		return keyboard;
+	}
+
+	public void setKeyboard(BufferedReader keyboard) {
+		this.keyboard = keyboard;
+	}
+
+	public PrintWriter getConsole() {
+		return console;
+	}
+
+	public void setConsole(PrintWriter console) {
+		this.console = console;
 	}
 	
 }

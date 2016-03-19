@@ -1,23 +1,29 @@
 package edu.byui.cit360.yelpserver.controller;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class HandlerMapper {
-	private HashMap<String, Handler> handlerMap = new HashMap<>();
+	
+	private ConcurrentHashMap<String, Handler> handlerMap = new ConcurrentHashMap<>();
 
 	public HandlerMapper() {
 		//creates mapping for handler requests
 		handlerMap.put("boot", new BootHandler());
-		handlerMap.put("updateConsole", new UpdateConsoleHandler());
-		handlerMap.put("keyboardListener", new KeyboardListenerHandler());
-		handlerMap.put("socketView", new SocketViewHandler());
+		handlerMap.put("error", new ErrorHandler());
+		handlerMap.put("start", new SocketHandler());
+		handlerMap.put("dummyData", new DummyDataHandler());
+		handlerMap.put("stop", new CloseSocketHandler());
+		handlerMap.put("client", new ClientHandler());
+		handlerMap.put("yelp", new YelpHandler());
 		handlerMap.put("processJSON", new ProcessJSONHandler());
-		handlerMap.put("loadFromPersist", new LoadFromPersistHandler());
+		handlerMap.put("model", new PrintModelHandler());
 
 
 	}
 
 	public Handler getHandler(String request) {
-		return this.handlerMap.get(request);
+		
+		return handlerMap.get(request);
+	
 	}
 }

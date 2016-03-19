@@ -1,21 +1,19 @@
 package edu.byui.cit360.yelpserver.controller;
 
+import edu.byui.cit360.yelpserver.view.MainView;
+
 public class BootHandler extends Handler {
 
 	@Override
 	public void handleIt(Controller controller, String... args) {
 		
-		//update console
-		controller.handleRequest(controller, "updateConsole", "Booting ...");
+		//Load dummy data
+		controller.handleRequest(controller, "dummyData");
+		controller.getModel().setKeepOpen(true);
 		
-		//load from persistence
-		controller.handleRequest(controller, "loadFromPersist");
-		
-		//open socket view
-		controller.handleRequest(controller, "socketView");
-		
-		//open keyboard input
-		controller.handleRequest(controller, "keyboardListener");
+		//Load MainView
+		MainView mainView = new MainView(controller);
+		mainView.display();
 		
 	}
 
